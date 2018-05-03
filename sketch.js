@@ -6,6 +6,9 @@ var dot = new Circle(0,0,3);
 var rodCircle = new Circle(0,0,rodLength);
 var c1 = new Circle(distance/2,0,radius);
 var c2 = new Circle(-distance/2,0,radius);
+var wattCurve = [];
+var wattCurveLen = 1000;
+var omega = 1.001388889;
 
 function setup(){
 	createCanvas(windowWidth, windowHeight);
@@ -25,14 +28,14 @@ function draw(){
 
 	// Point on the right circle
 	stroke("RED");
-	dot.x = distance/2+(radius*cos(theta));
-	dot.y = radius*sin(theta);
+	dot.x = c1.x+(c1.r*cos(theta));
+	dot.y = c1.y+c1.r*sin(theta);
 	dot.draw();
 
 	// Circle showing the rod's length
 	stroke("CYAN");
-	rodCircle.x = c1.x+radius*cos(theta);
-	rodCircle.y = c1.y+radius*sin(theta);
+	rodCircle.x = dot.x;
+	rodCircle.y = dot.y;
 	rodCircle.draw();
 
 	intersections = rodCircle.intersect(c2);
@@ -40,9 +43,17 @@ function draw(){
 	for(p of intersections){
 		ellipse(p.x,p.y,3,3);
 		line(p.x,p.y,dot.x,dot.y);
+		wattCurve.push({x:(p.x + dot.x)/2,y:(p.y+dot.y)/2});
 	}
 
-	theta++;
+	stroke("BLUE");
+	for(p of wattCurve)
+		point(p.x,p.y);
+
+	while(wattCurve.length > wattCurveLen)
+		wattCurve.splice(0,1);
+
+	theta += omega;
 }
 
 function windowResized(){
