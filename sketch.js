@@ -1,10 +1,10 @@
 var radius = 200;
 var distance = 500;
-var rodLength = 500;
+var rodLength = 450;
 var theta = 180;
 var dot = new Circle(0,0,3);
 var rodCircle = new Circle(0,0,rodLength);
-var c1 = new Circle(distance/2,0,radius);
+var c1 = new Circle(distance/2,0,radius+50);
 var c2 = new Circle(-distance/2,0,radius);
 var wattCurve = [];
 var wattCurveLen = 1000;
